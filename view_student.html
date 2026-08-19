@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iyunga SMS - View Students</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Left Side: Sidebar Panel (Inafanana na kurasa zingine zote) -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <h2>Iyunga SMS</h2>
+                <span class="system-badge">v1.0 - Front-end</span>
+            </div>
+            <nav class="sidebar-navigation">
+                <a href="dashboard.html" class="nav-item">📊 System Dashboard</a>
+                <a href="students.html" class="nav-item">➕ Add New Student</a>
+                <a href="view-students.html" class="nav-item active">👥 View Student Records</a>
+                <a href="index.html" class="nav-item logout-link">🚪 Exit Application</a>
+            </nav>
+        </aside>
+
+        <!-- Right Side: Main Administrative Content Viewport -->
+        <main class="app-viewport">
+            
+            <header class="viewport-header">
+                <div class="page-title">
+                    <h1>Student Records Registry</h1>
+                    <p>Week 2 Day 3 - View, search, and filter registered student records</p>
+                </div>
+                <div class="admin-profile">
+                    <div class="avatar">A</div>
+                    <span>System Administrator</span>
+                </div>
+            </header>
+
+            <!-- Workspace Content Canvas -->
+            <div class="viewport-canvas">
+                
+                <!-- 1. VIPENGELE VYA UI: Search and Filter Component Layer -->
+                <div class="search-filter-card">
+                    <div class="search-box-ui">
+                        <label for="search-student">Search Student:</label>
+                        <input type="text" id="search-student" placeholder="🔍 Type Name or Reg No to search...">
+                    </div>
+                    
+                    <div class="filter-box-ui">
+                        <label for="filter-class">Filter by Class Level:</label>
+                        <select id="filter-class">
+                            <option value="All">All Classes</option>
+                            <option value="Form 1">Form One</option>
+                            <option value="Form 2">Form Two</option>
+                            <option value="Form 3">Form Three</option>
+                            <option value="Form 4">Form Four</option>
+                            <option value="Form 5">Form Five</option>
+                            <option value="Form 6">Form Six</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 2. JEDWALI RASMI LA WANAFUNZI: Master Data Table Component -->
+                <div class="table-container-box" style="margin-top: 25px;">
+                    <div class="form-box-header" style="background-color: var(--sidebar-dark);">
+                        <h2>Iyunga Secondary Student Registry Database</h2>
+                        <p>Total Displayed Records: <span id="record-count">3</span> students</p>
+                    </div>
+                    
+                    <div class="student-table-wrapper" style="padding: 25px;">
+                        <div class="table-responsive-scroll">
+                            <table id="records-table">
+                                <thead>
+                                    <tr>
+                                        <th>Reg No</th>
+                                        <th>Full Name</th>
+                                        <th>Class Level</th>
+                                        <th>Phone No</th>
+                                        <th>Email Address</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="view-table-body">
+                                    <!-- Wanafunzi wa Mfano (Mock Data Nodes) kwa ajili ya majaribio ya UI leo -->
+                                    <tr class="student-row" data-class="Form 4">
+                                        <td><strong>ISS-2026-001</strong></td>
+                                        <td class="student-name-cell">Baraka Rashid</td>
+                                        <td>Form 4 (Male)</td>
+                                        <td>0712345678</td>
+                                        <td>baraka@gmail.com</td>
+                                        <td class="table-actions-cell">
+                                            <button class="btn-table-edit">Edit</button>
+                                            <button class="btn-table-delete">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="student-row" data-class="Form 6">
+                                        <td><strong>ISS-2026-002</strong></td>
+                                        <td class="student-name-cell">Kelvin John</td>
+                                        <td>Form 6 (Male)</td>
+                                        <td>0755987654</td>
+                                        <td>kelvin@gmail.com</td>
+                                        <td class="table-actions-cell">
+                                            <button class="btn-table-edit">Edit</button>
+                                            <button class="btn-table-delete">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="student-row" data-class="Form 1">
+                                        <td><strong>ISS-2026-003</strong></td>
+                                        <td class="student-name-cell">Anna Joseph</td>
+                                        <td>Form 1 (Female)</td>
+                                        <td>0766123456</td>
+                                        <td>anna@gmail.com</td>
+                                        <td class="table-actions-cell">
+                                            <button class="btn-table-edit">Edit</button>
+                                            <button class="btn-table-delete">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> <!-- /table-container-box -->
+
+            </div> <!-- /viewport-canvas -->
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
