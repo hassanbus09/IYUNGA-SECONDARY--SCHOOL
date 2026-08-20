@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iyunga SMS - Student Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+    <aside class="app-sidebar">
+        <div class="sidebar-header">
+            <h2>Iyunga SMS</h2>
+            <span class="system-badge">v1.0 - Front-end</span>
+        </div>
+
+        <nav class="sidebar-navigation">
+            <a href="dashboard.html" class="nav-item">📊 System Dashboard</a>
+            <a href="students.html" class="nav-item active">➕ Add New Student</a>
+            <!-- 🔴 REKEBISHO: Jina limewekwa 'view_student.html' ili lilingane na faili lako rasmi -->
+            <a href="view_students.html" class="nav-item">👥 View Student Records</a>
+            <a href="index.html" class="nav-item logout-link">🚪 Exit Application</a>
+        </nav>
+    </aside>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <main class="app-viewport">
+
+        <!-- HEADER -->
+        <header class="viewport-header">
+            <div class="page-title">
+                <h1>Student Registration</h1>
+                <p>Create and register new student records within the Iyunga Student Management System.</p>
+            </div>
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+                <span>System Administrator</span>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <div class="viewport-canvas">
+            <div class="form-container-box">
+                <div class="form-box-header">
+                    <h2>STUDENT SUBMISSION FORM</h2>
+                    <p>Please enter the required student information accurately below.</p>
+                </div>
+
+                <!-- STUDENT FORM (Novalidate imeongezwa kwa ajili ya ukaguzi wa JS) -->
+                <form id="student-submission-form" novalidate>
+
+                    <!-- NAME + REGISTRATION -->
+                    <div class="form-row-grid">
+                        <div class="form-input-group">
+                            <label for="student-name">Full Name:</label>
+                            <input type="text" id="student-name" placeholder="e.g. Juma Hamisi" required>
+                            <span class="error-message" id="name-error"></span>
+                        </div>
+
+                        <div class="form-input-group">
+                            <label for="student-id">Registration Number:</label>
+                            <!-- 🔴 Imebadilishwa kuwa Readonly ili JS izalishe namba kiotomatiki -->
+                            <input type="text" id="student-id" placeholder="Generating automatically..." readonly>
+                            <span class="error-message" id="id-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- GENDER + CLASS -->
+                    <div class="form-row-grid">
+                        <div class="form-input-group">
+                            <label for="student-gender">Gender:</label>
+                            <select id="student-gender" required>
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span class="error-message" id="gender-error"></span>
+                        </div>
+
+                        <div class="form-input-group">
+                            <label for="student-class">Class / Form Level:</label>
+                            <select id="student-class" required>
+                                <option value="" disabled selected>Select Class</option>
+                                <option value="Form 1">Form One</option>
+                                <option value="Form 2">Form Two</option>
+                                <option value="Form 3">Form Three</option>
+                                <option value="Form 4">Form Four</option>
+                                <option value="Form 5">Form Five</option>
+                                <option value="Form 6">Form Six</option>
+                            </select>
+                            <span class="error-message" id="class-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- PHONE + EMAIL -->
+                    <div class="form-row-grid">
+                        <div class="form-input-group">
+                            <label for="student-phone">Phone Number:</label>
+                            <input type="tel" id="student-phone" placeholder="e.g. 0766968799" required>
+                            <span class="error-message" id="phone-error"></span>
+                        </div>
+
+                        <div class="form-input-group">
+                            <label for="student-email">Email Address:</label>
+                            <input type="email" id="student-email" placeholder="e.g. student@gmail.com" required>
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="form-buttons-action">
+                        <button type="button" id="btn-clear-form" class="btn-form-clear">Reset Form</button>
+                        <button type="submit" class="btn-form-submit">Submit Record</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
