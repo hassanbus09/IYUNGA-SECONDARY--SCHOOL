@@ -1237,3 +1237,11 @@ footer p {
         transition-duration: 0.01ms !important;
     }
 }
+/* ==========================================================================
+   SULUHISHO: KULAZIMISHA SEHEMU ZOTE ZIONEKANE (FIX BLANK SCREEN)
+   ========================================================================== */
+.fade-in-section {
+    opacity: 1 !important; /* Inalazimisha section zionekane mara moja */
+    transform: translateY(0) !important; /* Inazuia herufi zisishuke chini sana */
+    transition: none !important;
+}
