@@ -199,3 +199,83 @@ function initRegistryTableViewer() {
         classFilter.addEventListener('change', filterEngine);
     }
 }
+// Hakikisha kila kitu kinapakiwa kabla ya kuanza
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. MIFUMO YA SLIDESHOW
+    let slideIndex = 0;
+    let slideTimer;
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        
+        // Ficha picha zote kwanza
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        
+        // Ongeza index
+        slideIndex++;
+        
+        // Kama index imezidi idadi ya picha, rudi mwanzo
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }    
+        
+        // Onyesha picha iliyopo kwenye zamu
+        if (slides.length > 0) {
+            slides[slideIndex - 1].style.display = "block";  
+        }
+        
+        // Badilisha picha kila baada ya sekunde 3
+        slideTimer = setTimeout(showSlides, 3000); 
+    }
+
+    // 2. KUDHIBITI VITUFE VYA PREV NA NEXT
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            clearTimeout(slideTimer); // Simamisha muda wa kujiendesha kwanza
+            moveSlide(1);
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            clearTimeout(slideTimer);
+            moveSlide(-1);
+        });
+    }
+
+    function moveSlide(n) {
+        let slides = document.getElementsByClassName("mySlides");
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        
+        slideIndex += n;
+        
+        if (slideIndex > slides.length) { slideIndex = 1; }
+        if (slideIndex < 1) { slideIndex = slides.length; }
+        
+        slides[slideIndex - 1].style.display = "block";
+        slideTimer = setTimeout(showSlides, 4000); // Anza tena auto-play baada ya sekunde 4
+    }
+
+    // Washa slideshow
+    showSlides();
+
+
+    // 3. MENU TOGGLE (Kwa ajili ya Simu)
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+});

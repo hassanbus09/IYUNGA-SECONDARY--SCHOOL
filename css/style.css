@@ -349,7 +349,7 @@ footer p {
    11. FADE ANIMATION
    ========================= */
 .fade-in-section {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(40px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
