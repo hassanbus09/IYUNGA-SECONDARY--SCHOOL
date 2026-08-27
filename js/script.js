@@ -279,3 +279,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// Hii inasikiliza fomu ikibonyezwa Submit
+document.getElementById('student-submission-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Kukusanya taarifa kutoka kwenye fomu yako ya HTML
+    const studentData = {
+        reg_no: document.getElementById('student-id').value,
+        full_name: document.getElementById('student-name').value,
+        gender: document.getElementById('student-gender').value,
+        class_level: document.getElementById('student-class').value,
+        phone_number: document.getElementById('student-phone').value,
+        email_address: document.getElementById('student-email').value
+    };
+
+    // Kusukuma data kwenda kwenye server.js (Port 8080)
+    const response = await fetch('http://localhost:8080/api/students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(studentData)
+    });
+
+    const result = await response.json();
+    if (result.success) {
+        alert("✅ Taarifa zimeingia kwenye pgAdmin 4!");
+    }
+});

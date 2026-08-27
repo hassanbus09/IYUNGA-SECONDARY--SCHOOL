@@ -36,6 +36,12 @@ pool.connect((err, client, release) => {
 // 1. POST: Tuma taarifa za mwanafunzi kwenda PostgreSQL
 app.post('/api/students', async (req, res) => {
     const { reg_no, full_name, gender, class_level, phone_number, email_address } = req.body;
+    // Kipande cha kuingiza data (INSERT) kwenye PostgreSQL
+const queryText = 'INSERT INTO students (reg_no, full_name, gender, class_level, phone_number, email_address) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+const values = [reg_no, full_name, gender, class_level, phone_number, email_address];
+
+const result = await pool.query(queryText, values);
+
     
     // Ulinzi: Zuia data tupu zisizoweza kuingia kwenye database
     if (!reg_no || !full_name) {
