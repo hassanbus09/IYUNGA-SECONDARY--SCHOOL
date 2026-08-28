@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 
 const app = express();
-const PORT = 8080; 
+const PORT = 3000; 
 
 // 1. Middlewares - Muhimu ili server isome JSON kutoka Postman
 app.use(cors());
