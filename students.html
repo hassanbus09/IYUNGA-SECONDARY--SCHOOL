@@ -53,21 +53,23 @@
                     <p>Please enter the required student information accurately below.</p>
                 </div>
 
-                <!-- STUDENT FORM (Novalidate imeongezwa kwa ajili ya ukaguzi wa JS) -->
-                <form id="student-submission-form" novalidate>
+                                <!-- STUDENT FORM -->
+                <!-- 🟢 REKEBISHO 1: Action na Method zimeongezwa hapa ili kusukuma data moja kwa moja backend port 3000 -->
+                <form id="student-submission-form" action="http://localhost:3000/api/students" method="POST" novalidate>
 
                     <!-- NAME + REGISTRATION -->
                     <div class="form-row-grid">
                         <div class="form-input-group">
                             <label for="student-name">Full Name:</label>
-                            <input type="text" id="student-name" placeholder="e.g. Juma Hamisi" required>
+                            <!-- 🟢 REKEBISHO 2: name="full_name" imeongezwa -->
+                            <input type="text" id="student-name" name="full_name" placeholder="e.g. Juma Hamisi" required>
                             <span class="error-message" id="name-error"></span>
                         </div>
 
                         <div class="form-input-group">
                             <label for="student-id">Registration Number:</label>
-                            <!-- 🔴 Imebadilishwa kuwa Readonly ili JS izalishe namba kiotomatiki -->
-                            <input type="text" id="student-id" placeholder="Generating automatically..." readonly>
+                            <!-- 🟢 REKEBISHO 3: name="reg_no" imeongezwa -->
+                            <input type="text" id="student-id" name="reg_no" placeholder="Generating automatically..." readonly>
                             <span class="error-message" id="id-error"></span>
                         </div>
                     </div>
@@ -76,7 +78,8 @@
                     <div class="form-row-grid">
                         <div class="form-input-group">
                             <label for="student-gender">Gender:</label>
-                            <select id="student-gender" required>
+                            <!-- 🟢 REKEBISHO 4: name="gender" imeongezwa -->
+                            <select id="student-gender" name="gender" required>
                                 <option value="" disabled selected>Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -86,7 +89,8 @@
 
                         <div class="form-input-group">
                             <label for="student-class">Class / Form Level:</label>
-                            <select id="student-class" required>
+                            <!-- 🟢 REKEBISHO 5: name="class_level" imeongezwa -->
+                            <select id="student-class" name="class_level" required>
                                 <option value="" disabled selected>Select Class</option>
                                 <option value="Form 1">Form One</option>
                                 <option value="Form 2">Form Two</option>
@@ -103,13 +107,15 @@
                     <div class="form-row-grid">
                         <div class="form-input-group">
                             <label for="student-phone">Phone Number:</label>
-                            <input type="tel" id="student-phone" placeholder="e.g. 0766968799" required>
+                            <!-- 🟢 REKEBISHO 6: name="phone_number" imeongezwa -->
+                            <input type="tel" id="student-phone" name="phone_number" placeholder="e.g. 0766968799" required>
                             <span class="error-message" id="phone-error"></span>
                         </div>
 
                         <div class="form-input-group">
                             <label for="student-email">Email Address:</label>
-                            <input type="email" id="student-email" placeholder="e.g. student@gmail.com" required>
+                            <!-- 🟢 REKEBISHO 7: name="email_address" imeongezwa -->
+                            <input type="email" id="student-email" name="email_address" placeholder="e.g. student@gmail.com" required>
                             <span class="error-message" id="email-error"></span>
                         </div>
                     </div>
@@ -121,6 +127,7 @@
                     </div>
 
                 </form>
+
             </div>
         </div>
     </main>

@@ -41,10 +41,11 @@ function initRegistrationFormEngine() {
 
     // Form intake processing link execution
     studentFormEl.addEventListener('submit', (event) => {
-        event.preventDefault();
+        // 🔴 REKEBISHO KUU: Tumeondoa event.preventDefault() hapa ili kuruhusu asili ya fomu kusafiri kwenda server.js (Port 3000)
 
         // Perform strict evaluation constraints on names and digits
         if (nameInput.value.trim().length < 3 || phoneInput.value.trim().length !== 10) {
+            event.preventDefault(); // Inazuia TU ikiwa mtumiaji amekosea kujaza fomu
             alert("Validation Error: Please make sure Full Name has 3+ characters and Phone Number has exactly 10 digits.");
             return;
         }
@@ -58,19 +59,12 @@ function initRegistrationFormEngine() {
             email: emailInput.value.trim()
         };
 
+        // Tunahifadhi nakala kwenye localStorage kama mwanzo
         const currentRegistry = getStoredStudents();
         currentRegistry.push(newStudent);
         saveStudentsToStorage(currentRegistry);
-
-        // SUCCESS CONFIRMATION ALERT
-        alert(`Success! "${newStudent.name}" has been compiled and saved into the browser database.\n\nYou can keep adding more students here, or click "View Student Records" on the left menu to view them!`);
         
-        // Form caches reset so you can add another student immediately
-        studentFormEl.reset();
-        
-        // 🔴 ABSOLUTE LAYOUT NAVIGATION PROTECTION: 
-        // We have removed the automatic redirect line from here! The page stays on the form 
-        // until the admin explicitly decides to click the sidebar menu vectors.
+        // Seva (server.js) sasa itashughulikia alert na kusafisha fomu kiotomatiki baada ya kuingiza data pgAdmin 4!
     });
 
     if (clearFormBtn) {
@@ -139,9 +133,12 @@ function initRegistryTableViewer() {
                     const uEmail = row.querySelector('.input-email').value;
 
                     if (targetIndex !== -1) {
-                        globalRegistry[targetIndex].id = uId; globalRegistry[targetIndex].name = uName;
-                        globalRegistry[targetIndex].studentClass = uClass; globalRegistry[targetIndex].phone = uPhone;
-                        globalRegistry[targetIndex].email = uEmail; saveStudentsToStorage(globalRegistry);
+                        globalRegistry[targetIndex].id = uId; 
+                        globalRegistry[targetIndex].name = uName;
+                        globalRegistry[targetIndex].studentClass = uClass; 
+                        globalRegistry[targetIndex].phone = uPhone;
+                        globalRegistry[targetIndex].email = uEmail; 
+                        saveStudentsToStorage(globalRegistry);
                     }
 
                     row.querySelector('.cell-id').innerHTML = `<strong>${uId}</strong>`;
@@ -150,7 +147,8 @@ function initRegistryTableViewer() {
                     row.querySelector('.cell-phone').textContent = uPhone;
                     row.querySelector('.cell-email').textContent = uEmail;
 
-                    editBtn.textContent = 'Edit'; editBtn.className = 'btn-table-edit';
+                    editBtn.textContent = 'Edit'; 
+                    editBtn.className = 'btn-table-edit';
                 } else {
                     row.querySelector('.cell-id').innerHTML = `<input type="text" class="table-cell-input input-id" value="${student.id}">`;
                     row.querySelector('.cell-name').innerHTML = `<input type="text" class="table-cell-input input-name" value="${student.name}">`;
@@ -158,7 +156,8 @@ function initRegistryTableViewer() {
                     row.querySelector('.cell-phone').innerHTML = `<input type="tel" class="table-cell-input input-phone" value="${student.phone}">`;
                     row.querySelector('.cell-email').innerHTML = `<input type="email" class="table-cell-input input-email" value="${student.email}">`;
 
-                    editBtn.textContent = 'Save'; editBtn.className = 'btn-table-save editing';
+                    editBtn.textContent = 'Save'; 
+                    editBtn.className = 'btn-table-save editing';
                 }
             });
 
@@ -175,7 +174,7 @@ function initRegistryTableViewer() {
             viewTableBody.appendChild(row);
         });
 
-        if (recordCountDisplay) recordCountDisplay.textContent = dataArray.length;
+        if (recordCountDisplay) recordCountDisplay.textContent = dataArray.length.toString();
     }
 
     renderTableRows(storedStudents);
@@ -184,9 +183,9 @@ function initRegistryTableViewer() {
     function filterEngine() {
         const searchText = searchInput.value.toLowerCase();
         const selectedClass = classFilter.value;
-        storedStudents = getStoredStudents();
+        let internalRegistry = getStoredStudents();
 
-        const filtered = storedStudents.filter(student => {
+        const filtered = internalRegistry.filter(student => {
             const matchesSearch = student.name.toLowerCase().includes(searchText) || student.id.toLowerCase().includes(searchText);
             const matchesClass = selectedClass === 'All' || student.studentClass === selectedClass;
             return matchesSearch && matchesClass;
@@ -199,19 +198,17 @@ function initRegistryTableViewer() {
         classFilter.addEventListener('change', filterEngine);
     }
 }
-// Hakikisha kila kitu kinapakiwa kabla ya kuanza
+
+// Hakikisha kila kitu kinapakiwa kabla ya kuanza (Slideshow na Menu mobile)
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. MIFUMO YA SLIDESHOW
     let slideIndex = 0;
     let slideTimer;
 
     function showSlides() {
         let i;
         let slides = document.getElementsByClassName("mySlides");
-        
-        // Ficha picha zote kwanza
         for (i = 0; i < slides.length; i++) {
+
             slides[i].style.display = "none";  
         }
         
@@ -277,5 +274,66 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
+        
+            // Form intake processing link execution
+    studentFormEl.addEventListener('submit', (event) => {
+        event.preventDefault(); // Kuzuia ukurasa usirefreshi mapema
+
+        // Perform strict evaluation constraints on names and digits
+        if (nameInput.value.trim().length < 3 || phoneInput.value.trim().length !== 10) {
+            alert("Validation Error: Please make sure Full Name has 3+ characters and Phone Number has exactly 10 digits.");
+            return;
+        }
+
+        const newStudent = {
+            id: idInput.value,
+            name: nameInput.value.trim(),
+            gender: genderSelect.value,
+            studentClass: classSelect.value,
+            phone: phoneInput.value.trim(),
+            email: emailInput.value.trim()
+        };
+
+        // 1. MIFUMO YAKO YA ZAMANI YA LOCALSTORAGE (INABAKI)
+        const currentRegistry = getStoredStudents();
+        currentRegistry.push(newStudent);
+        saveStudentsToStorage(currentRegistry);
+
+        // ======================================================================
+        // 🟢 MSIMBO WA UHAKIKA: TUMA DATA MOJA KWA MOJA PGADMIN 4 KUPITIA BACKEND
+        // ======================================================================
+        fetch('http://localhost:3000/api/students', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                reg_no: newStudent.id,            // Imepangwa kufanana na server.js yako
+                full_name: newStudent.name,       // Imepangwa kufanana na server.js yako
+                gender: newStudent.gender,
+                class_level: newStudent.studentClass,
+                phone_number: newStudent.phone,
+                email_address: newStudent.email
+            })
+        })
+        .then(res => res.json())
+        .then(matokeo => {
+            if (matokeo.success) {
+                // Ujumbe wako halisi sasa utatokea kwa sababu data imeshaingia database
+                alert("a student added to pgAdmin 4");
+            } else {
+                console.error("Database Refused:", matokeo.error);
+            }
+        })
+        .catch(err => console.error("Mawasiliano na Backend Port 3000 yamefeli:", err));
+        // ======================================================================
+
+        // SUCCESS CONFIRMATION ALERT YA ZAMANI (Inabaki)
+        alert(`Success! "${newStudent.name}" has been compiled and saved into the browser database.`);
+        
+        // Kusafisha fomu baada ya matukio yote kukamilika
+        studentFormEl.reset();
+    });
+
     }
 });
