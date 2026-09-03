@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <title>MUST - Mfumo wa Dynamic Module Enrollment</title>
+</head>
+<body style="background-color: #f3f4f6; font-family: Arial, sans-serif; padding: 25px;">
+
+    <!-- ================================================================= -->
+    <!-- 1. FOMU KUU YA USAJILI (UPANDE WA JUU)                            -->
+    <!-- ================================================================= -->
+    <div style="background-color: #ffffff; max-width: 850px; margin: 0 auto 30px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 30px; border: 1px solid #cbd5e1;">
+        
+        <h2 style="color: #002d62; margin-top: 0; text-align: center;">DYNAMIC MODULE ENROLLMENT SYSTEM - MUST</h2>
+        <p style="color: #64748b; font-size: 13.5px; text-align: center; margin-bottom: 20px; font-style: italic;">
+            Project Target: Mitigation of Lack of Static Module Enrollment for First-Year Students Each Year
+        </p>
+        <hr style="border: 0; border-top: 1px solid #cbd5e1; margin-bottom: 20px;">
+
+        <form onsubmit="sajiliMwanafunziKwenyeTableLeo(event)">
+            
+            <!-- TAARIFA ZA MWANAFUNZI (JINA NA JINSIA) -->
+            <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 2;">
+                        <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #1e293b;">Jina Kamili:</label>
+                        <input type="text" id="inputJina" placeholder="Ingiza jina lako kamili" required style="width: 95%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #1e293b;">Jinsia:</label>
+                        <select id="inputJinsia" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none; background: white; cursor: pointer;">
+                            <option value="">Chagua...</option>
+                            <option value="Mume">Mume</option>
+                            <option value="Mke">Mke</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEHEMU YA UCHAGUZI WA MWAKA NA MTAALA WA MASOMO (MODULES) -->
+            <div style="background: #f1f5f9; padding: 15px; border-radius: 6px; margin-bottom: 25px; border: 1px solid #cbd5e1;">
+                <div style="display: flex; gap: 15px;">
+                    <div style="flex: 1;">
+                        <label style="font-size: 14px; font-weight: bold; color: #1e293b; display: block; margin-bottom: 5px;">Chagua Mwaka wa Mwanafunzi:</label>
+                        <select id="studentYearTrigger" onchange="pakiaMasomoYanayobadilika()" style="width: 100%; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 2px solid #0056b3; cursor: pointer; outline: none; background: white;">
+                            <option value="1">Mwaka wa Kwanza (First Year)</option>
+                            <option value="2">Mwaka wa Pili (Second Year)</option>
+                            <option value="3">Mwaka wa Tatu (Third Year)</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="font-size: 14px; font-weight: bold; color: #1e293b; display: block; margin-bottom: 5px;">Mtaala wa Kipindi Husika (Academic Year):</label>
+                        <select id="academicYearConfig" onchange="pakiaMasomoYanayobadilika()" style="width: 100%; padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 2px solid #d4af37; cursor: pointer; outline: none; background: white;">
+                            <option value="2024_2025">Mtaala wa 2024/2025</option>
+                            <option value="2025_2026">Mtaala wa 2025/2026</option>
+                            <option value="2026_2027" selected>Mtaala wa Sasa (2026/2027)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABS ZA MIRENGI YA MASOMO (MODULES) -->
+            <div style="display: flex; border-bottom: 2px solid #cbd5e1; margin-bottom: 20px;">
+                <button type="button" id="tabBtn1" onclick="switchTab(1)" style="padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; background-color: #0056b3; color: white; border-radius: 4px 4px 0 0; cursor: pointer; margin-right: 2px;">Year 1 Modules</button>
+                <button type="button" id="tabBtn2" onclick="switchTab(2)" style="padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; background-color: #e2e8f0; color: #64748b; border-radius: 4px 4px 0 0; cursor: pointer; margin-right: 2px;">Year 2 Modules</button>
+                <button type="button" id="tabBtn3" onclick="switchTab(3)" style="padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; background-color: #e2e8f0; color: #64748b; border-radius: 4px 4px 0 0; cursor: pointer;">Year 3 Modules</button>
+            </div>
+
+            <!-- CONTAINER INAYOPAKIA DYNAMIC MODULES 6 CHINI -->
+            <div id="courseContainerView">
+                <h4 id="courseTitleHeader" style="color: #0056b3; margin-top: 0; text-transform: uppercase;">Orodha ya Masomo (Dynamic Loading...)</h4>
+                <div id="dynamicCheckboxesArea" style="background: #f8fafc; padding: 20px; border-radius: 6px; border: 1px solid #e2e8f0; line-height: 1.8;">
+                    <!-- Masomo yataingia hapa dynamically kulingana na mtaala -->
+                </div>
+            </div>
+
+            <button type="submit" style="background-color: #0056b3; color: white; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 25px; width: 100%;">
+                Complete Dynamic Module Enrollment
+            </button>
+        </form>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 2. JEDWALI MOJA LA HISTORIA YA USAJILI WA LEO                      -->
+    <!-- ================================================================= -->
+    <div style="background-color: #ffffff; max-width: 850px; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 30px; border: 1px solid #cbd5e1;">
+        <h3 style="color: #002d62; margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px;">📋 Orodha ya Wanafunzi Waliosajiliwa Leo</h3>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
+            <thead>
+                <tr style="background-color: #f1f5f9; border-bottom: 2px solid #cbd5e1; text-align: left;">
+                    <th style="padding: 10px;">Jina Kamili</th>
+                    <th style="padding: 10px;">Jinsia</th>
+                    <th style="padding: 10px;">Mwaka & Mtaala</th>
+                    <th style="padding: 10px;">Masomo Yaliyosajiliwa (Modules)</th>
+                </tr>
+            </thead>
+            <tbody id="todayTableBody">
+                <tr style="border-bottom: 1px solid #e2e8f0; color: #718096;" id="noTodayDataRow">
+                    <td colspan="4" style="padding: 15px; text-align: center; font-style: italic;">Hakuna mwanafunzi aliyesajiliwa leo hii...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- AUTOMATED DYNAMIC MODULES ENROLLMENT LOGIC                        -->
+    <!-- ================================================================= -->
+    <script>
+        // Database simulation: Hapa masomo ya Mwaka wa Kwanza yanabadilika kabisa kwa kila mtaala!
+        const masomoDynamicDatabase = {
+            "1": {
+                "2024_2025": [
+                    {code: "ITT 04101", name: "Introduction to Computer Networks"},
+                    {code: "ITT 04102", name: "Fundamentals of Computer Programming"},
+                    {code: "ITT 04103", name: "Basic Mathematics for Computing"},
+                    {code: "ITT 04104", name: "Communication Skills"},
+                    {code: "ITT 04105", name: "PC Repair and Maintenance"},
+                    {code: "ITT 04106", name: "Operating System Concepts"}
+                ],
+                "2025_2026": [
+                    {code: "ITT 04111", name: "Introduction to Cybersecurity"},
+                    {code: "ITT 04112", name: "Structured Programming using C"},
+                    {code: "ITT 04113", name: "Discrete Mathematics"},
+                    {code: "ITT 04114", name: "Technical Writing & Report Architecture"},
+                    {code: "ITT 04115", name: "Hardware Systems Engineering"},
+                    {code: "ITT 04116", name: "Linux Workstation Essentials"}
+                ],
+                "2026_2027": [
+                    {code: "ITT 04121", name: "Introduction to Artificial Intelligence & ML"},
+                    {code: "ITT 04122", name: "Modern Python Scripting Foundations"},
+                    {code: "ITT 04123", name: "Computational Mathematics"},
+                    {code: "ITT 04124", name: "Professional & Corporate Communication"},
+                    {code: "ITT 04125", name: "Internet of Things (IoT) Hardware Basics"},
+                    {code: "ITT 04126", name: "Cloud Operating Systems Architecture"}
+                ]
+            },
+            "2": {
+                "2026_2027": [

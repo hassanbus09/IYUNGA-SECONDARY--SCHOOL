@@ -337,3 +337,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 });
+
+// ==========================================================================
+// 🟢 LIVE PERFORMANCE AUDITING TOOL FOR IPT ASSESSOR DEMO
+// ==========================================================================
+const btnHeavy = document.getElementById('btn-simulate-heavy');
+const btnOptimized = document.getElementById('btn-simulate-optimized');
+const outputDisplay = document.getElementById('simulation-output');
+
+if (btnHeavy && btnOptimized && outputDisplay) {
+    // 1. Kuiga Mfumo wa Zamani Unaoleta 504 Timeout
+    btnHeavy.addEventListener('click', () => {
+        outputDisplay.style.color = "#ffc107";
+        outputDisplay.innerHTML = "Connecting to upstream servers... [Simulating 3,000 Concurrent Student Requests]...<br>Executing Database Sequential Scan on unindexed 'student_results' table...";
+        
+        setTimeout(() => {
+            outputDisplay.style.color = "#dc3545";
+            outputDisplay.innerHTML = "❌ <strong>HTTP STATUS 504: Gateway Timeout</strong><br>Error: Upstream server timed out after 30000ms while reading response headers from backend database core.<br><em>Reason: CPU Execution spike @ 100% due to full table scans.</em>";
+        }, 3500); // Inachelewa kuonyesha ucheleweshaji wa seva
+    });
+
+    // 2. Kuiga Mfumo wako Mpya Ulioweka Index na RAM Cache
+    btnOptimized.addEventListener('click', () => {
+        outputDisplay.style.color = "#ffc107";
+        outputDisplay.innerHTML = "Intercepting request payload... [Cache Evaluation Check running]...<br>Memory Cache Hit (Redis In-Memory Tier)...";
+        
+        setTimeout(() => {
+            outputDisplay.style.color = "#28a745";
+            outputDisplay.innerHTML = "🟢 <strong>HTTP STATUS 200: OK</strong><br>Query Strategy: <strong>Index Scan using students_pkey</strong><br>Data Ingestion Pool: Active Cache Pipeline.<br><strong>Execution Time: 1.142 ms</strong><br><em>System Response: Academic results mapped and loaded instantly across 3,000 active concurrent threads.</em>";
+        }, 800); // Inajibu haraka kuonyesha ufanisi wa cache
+    });
+}

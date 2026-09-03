@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <title>MUST - Static Modules Enrollment system </title>
+</head>
+<body style="background-color: #19d812; font-family: Arial, sans-serif; padding: 25px;">
+
+    <div style="background-color: #ffffff; max-width: 800px; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 30px; border: 1px solid #cbd5e1;">
+        
+        <h2 style="color: #002d62; margin-top: 0; text-align: center;">MODULES ENROLLMENT SYSTEM - MUST</h2>
+        <hr style="border: 0; border-top: 1px solid #cbd5e1; margin-bottom: 20px;">
+
+        <!-- FOMU KUU -->
+        <form onsubmit="alert('Usajili Umekamilika Salama!'); return false;">
+            
+            <!-- SEHEMU MPYA: TAARIFA ZA MWANAFUNZI (JINA NA JINSIA) -->
+            <div style="background: #38699b; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <!-- Kisanduku cha Jina -->
+                    <div style="flex: 2;">
+                        <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #1e293b;">Jina Kamili:</label>
+                        <input type="text" placeholder="Ingiza jina lako kamili" required style="width: 95%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                    <!-- Kisanduku cha Jinsia -->
+                    <div style="flex: 1;">
+                        <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #1e293b;">Jinsia:</label>
+                        <select required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none; background: white; cursor: pointer;">
+                            <option value="">Chagua...</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEHEMU YA KUCHAGUA MWAKA WA MWANAFUNZI -->
+            <div style="background: #224568; padding: 15px; border-radius: 6px; margin-bottom: 25px; border: 1px solid #cbd5e1;">
+                <label style="font-size: 14px; font-weight: bold; color: #f01b37; margin-right: 10px;">Chagua Mwaka wa Mwanafunzi:</label>
+                <select id="studentYearTrigger" onchange="autoEnrollSystem()" style="padding: 8px 12px; font-size: 14px; font-weight: bold; border-radius: 4px; border: 2px solid #0056b3; cursor: pointer; outline: none; background: white;">
+                    <option value="1">Mwaka wa Kwanza (First Year)</option>
+                    <option value="2">Mwaka wa Pili (Second Year)</option>
+                    <option value="3">Mwaka wa Tatu (Third Year)</option>
+                </select>
+            </div>
+
+            <!-- VITUFE VYA TABS ZA MIRENGI YA MASOMO -->
+            <div style="display: flex; border-bottom: 2px solid #cbd5e1; margin-bottom: 20px;">
+                <button type="button" id="tabBtn1" onclick="switchTab(1)" style="padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; background-color: #0056b3; color: white; border-radius: 4px 4px 0 0; cursor: pointer; margin-right: 2px;">Year 1 modules</button>
+                <button type="button" id="tabBtn2" onclick="switchTab(2)" style="padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; background-color: #e2e8f0; color: #64748b; border-radius: 4px 4px 0 0; cursor: pointer; margin-right: 2px;">Year 2 modules</button>
+                <button type="button" id="tabBtn3" onclick="switchTab(3)" style="padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; background-color: #e2e8f0; color: #64748b; border-radius: 4px 4px 0 0; cursor: pointer;">Year 3 modules</button>
+            </div>
+
+            <!-- GROUP LA MWAKA WA KWANZA (MASOMO 6) -->
+            <div id="tabContent1" style="display: block;">
+                <h4 style="color: #0056b3; margin-top: 0;">Orodha ya Masomo - Mwaka wa 1 (Diploma in Computer Science)</h4>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y1-check" value="ITT 04101" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 04101</strong> - Introduction to Computer Networks</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y1-check" value="ITT 04102" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 04102</strong> - Fundamentals of Computer Programming</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y1-check" value="ITT 04103" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 04103</strong> - Basic Mathematics for Computing</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y1-check" value="ITT 04104" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 04104</strong> - Communication Skills</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y1-check" value="ITT 04105" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 04105</strong> - PC Repair and Maintenance</label>
+                    <label style="display: block; font-size: 14px;"><input type="checkbox" class="y1-check" value="ITT 04106" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 04106</strong> - Operating System Concepts</label>
+                </div>
+            </div>
+
+            <!-- GROUP LA MWAKA WA PILI (MASOMO 6) -->
+            <div id="tabContent2" style="display: none;">
+                <h4 style="color: #0f172a; margin-top: 0;">Orodha ya Masomo - Mwaka wa 2 (Diploma in Computer Science)</h4>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y2-check" value="ITT 05201" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 05201</strong> - Database Management Systems</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y2-check" value="ITT 05202" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 05202</strong> - Object-Oriented Programming using Java</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y2-check" value="ITT 05203" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 05203</strong> - Data Structures and Algorithms</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y2-check" value="ITT 05204" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 05204</strong> - Web Technologies & Development</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y2-check" value="ITT 05205" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 05205</strong> - Systems Analysis and Design</label>
+                    <label style="display: block; font-size: 14px;"><input type="checkbox" class="y2-check" value="ITT 05206" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 05206</strong> - Entrepreneurship for IT Specialists</label>
+                </div>
+            </div>
+
+            <!-- GROUP LA MWAKA WA TATU (MASOMO 6) -->
+            <div id="tabContent3" style="display: none;">
+                <h4 style="color: #0f172a; margin-top: 0;">Orodha ya Masomo - Mwaka wa 3 (Diploma in Computer Science)</h4>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y3-check" value="ITT 06201" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 06201</strong> - Cyber Security Fundamentals</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y3-check" value="ITT 06202" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 06202</strong> - Mobile Application Development</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y3-check" value="ITT 06203" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 06203</strong> - Linux Cloud Infrastructure</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y3-check" value="ITT 06204" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 06204</strong> - Software Project Management</label>
+                    <label style="display: block; margin-bottom: 10px; font-size: 14px;"><input type="checkbox" class="y3-check" value="ITT 06205" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 06205</strong> - Distributed Systems</label>
+                    <label style="display: block; font-size: 14px;"><input type="checkbox" class="y3-check" value="ITT 06206" style="transform: scale(1.2); margin-right: 8px;"> <strong>ITT 06206</strong> - Final Academic Project Research</label>
+                </div>
+            </div>
+
+            <!-- KITUFE CHA KUSAJILI -->
+
+
+            <button type="submit" style="background-color: #0056b3; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 20px; width: 100%;">
+                SUBMIT REGISTRATION
+            </button>
+        </form>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- JAVASCRIPT LOGIC DIRECT FROM YOUR INSTRUCTIONS                     -->
+    <!-- ================================================================= -->
+    <script>
+        // 1. Kazi inayofanya kazi 'Automatic' pindi drop-down ya Mwaka inapobadilishwa
+        function autoEnrollSystem() {
+            let selectedYear = parseInt(document.getElementById('studentYearTrigger').value);
+
+            // Fungua tab husika kiotomatiki
+            switchTab(selectedYear);
+
+            // Ondoa tiki (untick) kwenye mabox yote ya masomo kwanza ili kuanza upya
+            let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            allCheckboxes.forEach(cb => { cb.checked = false; });
+
+            // Jaza tiki AUTOMATIC (Auto-check) kwenye masomo ya mwaka uliochaguliwa tu
+            if (selectedYear === 1) {
+                document.querySelectorAll('.y1-check').forEach(cb => { cb.checked = true; });
+            } else if (selectedYear === 2) {
+                document.querySelectorAll('.y2-check').forEach(cb => { cb.checked = true; });
+            } else if (selectedYear === 3) {
+                document.querySelectorAll('.y3-check').forEach(cb => { cb.checked = true; });
+            }
+        }
+
+        // 2. Kazi inayobadili muonekano wa Tabs (Mtu akibonyeza pia Tab yenyewe inafungua)
+        function switchTab(tabNumber) {
+            document.getElementById('studentYearTrigger').value = tabNumber;
+
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('tabContent' + i).style.display = 'none';
+                let btn = document.getElementById('tabBtn' + i);
+                btn.style.backgroundColor = '#e2e8f0';
+                btn.style.color = '#64748b';
+            }
+
+            // Weka rangi ya bluu kwenye tab iliyofunguka
+            document.getElementById('tabContent' + tabNumber).style.display = 'block';
+            let activeBtn = document.getElementById('tabBtn' + tabNumber);
+            activeBtn.style.backgroundColor = '#0056b3';
+            activeBtn.style.color = 'white';
+
+            // Kila tab ikifunguliwa kwa mkono, piga tiki masomo ya tab hiyo automatic
+            let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            allCheckboxes.forEach(cb => { cb.checked = false; });
+            document.querySelectorAll('.y' + tabNumber + '-check').forEach(cb => { cb.checked = true; });
+        }
+
+        // Washa usajili wa kiotomatiki wa mwaka wa kwanza mara ukurasa unapoandaliwa
+        window.onload = function() {
+            autoEnrollSystem();
+        };
+    </script>
+</body>
+</html>
