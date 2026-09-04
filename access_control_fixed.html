@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <title>MUST - Static Modules Enrollment system </title>
 </head>
-<body style="background-color: #19d812; font-family: Arial, sans-serif; padding: 25px;">
+<body style="background-color: #56ad53; font-family: Arial, sans-serif; padding: 25px;">
 
     <div style="background-color: #ffffff; max-width: 800px; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 30px; border: 1px solid #cbd5e1;">
         
+    <!-- 1. HAPA NDIPO LOGO INAPOWEKWA KWA NJIA YA MTANDAONI -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="MUST_idiMChWq7M_2.jpeg" alt="MUST Logo" style="width: 100%; height: auto; display: block; object-fit: cover;">
+    </div>
         <h2 style="color: #002d62; margin-top: 0; text-align: center;">MODULES ENROLLMENT SYSTEM - MUST</h2>
         <hr style="border: 0; border-top: 1px solid #cbd5e1; margin-bottom: 20px;">
 
         <!-- FOMU KUU -->
-        <form onsubmit="alert('Usajili Umekamilika Salama!'); return false;">
+        <form onsubmit="addStudentToTable(event);">
+
             
             <!-- SEHEMU MPYA: TAARIFA ZA MWANAFUNZI (JINA NA JINSIA) -->
             <div style="background: #38699b; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
@@ -20,12 +25,12 @@
                     <!-- Kisanduku cha Jina -->
                     <div style="flex: 2;">
                         <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #1e293b;">Jina Kamili:</label>
-                        <input type="text" placeholder="Ingiza jina lako kamili" required style="width: 95%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                        <input type="text" id="studentName" placeholder="Ingiza jina lako kamili" required style="width: 95%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
                     </div>
                     <!-- Kisanduku cha Jinsia -->
                     <div style="flex: 1;">
                         <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #1e293b;">Jinsia:</label>
-                        <select required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none; background: white; cursor: pointer;">
+                        <select  id="studentGender" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none; background: white; cursor: pointer;">
                             <option value="">Chagua...</option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -96,62 +101,233 @@
             <button type="submit" style="background-color: #0056b3; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 20px; width: 100%;">
                 SUBMIT REGISTRATION
             </button>
+            <!-- ======================================================== -->
+<!-- JEDWALI LA WANAFUNZI WALIOSAJILIWA MFUOMONI               -->
+<!-- ======================================================== -->
+<div style="margin-top: 35px; border-top: 2px solid #cbd5e1; padding-top: 20px;">
+    <h3 style="color: #002d62; margin-top: 0;">Orodha ya Wanafunzi Waliosajiliwa Mfumoni</h3>
+    
+    <table id="recordsTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
+        <thead>
+            <tr style="background-color: #002d62; color: white; text-align: left;">
+                <th style="padding: 10px; border: 1px solid #cbd5e1;">Jina Kamili</th>
+                <th style="padding: 10px; border: 1px solid #cbd5e1;">Jinsia</th>
+                <th style="padding: 10px; border: 1px solid #cbd5e1;">Mwaka wa Masomo</th>
+                <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: center;">Modules Registered</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Mstari unaoonekana kabla ya data yoyote kuingia mfumoni -->
+            <tr id="noDataRow">
+                <td colspan="4" style="padding: 15px; text-align: center; color: #64748b; font-style: italic; background-color: #f8fafc;">
+                    Hakuna mwanafunzi aliyesajiliwa kwa sasa. Jaza fomu hapo juu kukamilisha usajili.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- ======================================================== -->
+<!-- DIRISHA LA POP-UP (MODAL) LA KU-VIEW MASOMO YALIYOFICHWA -->
+<!-- ======================================================== -->
+<div id="modulesModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+    <div style="background-color: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); font-family: Arial, sans-serif;">
+        
+        <!-- Kichwa cha Pop-up (Jina la mwanafunzi litaingia hapa) -->
+        <h3 style="color: #002d62; margin-top: 0; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px;" id="modalTitle">Masomo Yaliyosajiliwa</h3>
+        
+        <!-- Mwili wa Pop-up (Orodha ya masomo itaingia hapa) -->
+        <div id="modalBody" style="margin: 20px 0; font-size: 14px; color: #334155; line-height: 1.6;">
+        </div>
+        
+        <!-- Kitufe cha kufunga dirisha -->
+        <div style="text-align: right;">
+            <button type="button" onclick="closeModal()" style="background-color: #ef4444; color: white; border: none; padding: 8px 20px; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; outline: none;">
+                Funga Dirisha
+            </button>
+        </div>
+    </div>
+</div>
+
         </form>
 
     </div>
 
-    <!-- ================================================================= -->
-    <!-- JAVASCRIPT LOGIC DIRECT FROM YOUR INSTRUCTIONS                     -->
-    <!-- ================================================================= -->
-    <script>
-        // 1. Kazi inayofanya kazi 'Automatic' pindi drop-down ya Mwaka inapobadilishwa
-        function autoEnrollSystem() {
-            let selectedYear = parseInt(document.getElementById('studentYearTrigger').value);
+   
+    <script> 
+let studentsDatabase = [];
 
-            // Fungua tab husika kiotomatiki
-            switchTab(selectedYear);
+// Kazi inayofanya kazi 'Automatic' pindi drop-down ya Mwaka inapobadilishwa
+function autoEnrollSystem() {
+    let selectedYear = parseInt(document.getElementById('studentYearTrigger').value);
 
-            // Ondoa tiki (untick) kwenye mabox yote ya masomo kwanza ili kuanza upya
-            let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-            allCheckboxes.forEach(cb => { cb.checked = false; });
+    // Fungua tab husika kiotomatiki
+    switchTabLogic(selectedYear);
 
-            // Jaza tiki AUTOMATIC (Auto-check) kwenye masomo ya mwaka uliochaguliwa tu
-            if (selectedYear === 1) {
-                document.querySelectorAll('.y1-check').forEach(cb => { cb.checked = true; });
-            } else if (selectedYear === 2) {
-                document.querySelectorAll('.y2-check').forEach(cb => { cb.checked = true; });
-            } else if (selectedYear === 3) {
-                document.querySelectorAll('.y3-check').forEach(cb => { cb.checked = true; });
-            }
+    // Ondoa tiki na ufungue mabox yote ya masomo kwanza ili kuanza upya
+    let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    allCheckboxes.forEach(cb => { 
+        cb.checked = false; 
+        cb.disabled = false; 
+    });
+
+    // MANTIKI YA AUTOMATION (Static Lock to Bypass 504 Timeout)
+    if (selectedYear === 1) {
+        document.querySelectorAll('.y1-check').forEach(cb => { 
+            cb.checked = true; 
+            cb.disabled = true; // Lock masomo ya lazima
+        });
+    } else if (selectedYear === 2) {
+        document.querySelectorAll('.y2-check').forEach(cb => { cb.checked = true; });
+    } else if (selectedYear === 3) {
+        document.querySelectorAll('.y3-check').forEach(cb => { cb.checked = true; });
+    }
+}
+
+// Kazi inayobadili muonekano wa Tabs na kubadili thamani ya Drop-down
+function switchTab(tabNumber) {
+    document.getElementById('studentYearTrigger').value = tabNumber;
+    
+    let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    allCheckboxes.forEach(cb => { 
+        cb.checked = false; 
+        cb.disabled = false; 
+    });
+
+    document.querySelectorAll('.y' + tabNumber + '-check').forEach(cb => { 
+        cb.checked = true; 
+        if (tabNumber === 1) {
+            cb.disabled = true; 
         }
+    });
 
-        // 2. Kazi inayobadili muonekano wa Tabs (Mtu akibonyeza pia Tab yenyewe inafungua)
-        function switchTab(tabNumber) {
-            document.getElementById('studentYearTrigger').value = tabNumber;
+    switchTabLogic(tabNumber);
+}
 
-            for (let i = 1; i <= 3; i++) {
-                document.getElementById('tabContent' + i).style.display = 'none';
-                let btn = document.getElementById('tabBtn' + i);
-                btn.style.backgroundColor = '#e2e8f0';
-                btn.style.color = '#64748b';
-            }
-
-            // Weka rangi ya bluu kwenye tab iliyofunguka
-            document.getElementById('tabContent' + tabNumber).style.display = 'block';
-            let activeBtn = document.getElementById('tabBtn' + tabNumber);
-            activeBtn.style.backgroundColor = '#0056b3';
-            activeBtn.style.color = 'white';
-
-            // Kila tab ikifunguliwa kwa mkono, piga tiki masomo ya tab hiyo automatic
-            let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-            allCheckboxes.forEach(cb => { cb.checked = false; });
-            document.querySelectorAll('.y' + tabNumber + '-check').forEach(cb => { cb.checked = true; });
+// Function ya kubadili muonekano wa Tabs za HTML tu
+function switchTabLogic(tabNumber) {
+    for (let i = 1; i <= 3; i++) {
+        document.getElementById('tabContent' + i).style.display = 'none';
+        let btn = document.getElementById('tabBtn' + i);
+        if (btn) {
+            btn.style.backgroundColor = '#e2e8f0';
+            btn.style.color = '#64748b';
         }
+    }
+    
+    let activeContent = document.getElementById('tabContent' + tabNumber);
+    let activeBtn = document.getElementById('tabBtn' + tabNumber);
+    
+    if (activeContent) activeContent.style.display = 'block';
+    if (activeBtn) {
+        activeBtn.style.backgroundColor = '#0056b3';
+        activeBtn.style.color = 'white';
+    }
+}
 
-        // Washa usajili wa kiotomatiki wa mwaka wa kwanza mara ukurasa unapoandaliwa
-        window.onload = function() {
-            autoEnrollSystem();
-        };
-    </script>
+
+// =================================================================
+// 2. MANTIKI YA JEDWALI NA DIRISHA LA POP-UP (MODAL VIEW)
+// =================================================================
+
+function addStudentToTable(event) {
+    event.preventDefault(); // Zuia ukurasa usijirefresh
+
+    // Chukua taarifa kutoka kwenye fomu
+    let nameInput = document.getElementById('studentName');
+    let genderInput = document.getElementById('studentGender');
+    
+    let name = nameInput ? nameInput.value : document.querySelector('input[type="text"]').value;
+    let genderSelect = genderInput ? genderInput.value : document.querySelector('select:not(#studentYearTrigger)').value;
+    
+    let yearVal = document.getElementById('studentYearTrigger').value;
+    let yearText = "Mwaka wa " + yearVal;
+
+    // Kusanya masomo yote yaliyowekewa tiki
+    let selectedModules = [];
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(cb => {
+        selectedModules.push(cb.value);
+    });
+
+    if (selectedModules.length === 0) {
+        alert("Tafadhali chagua angalau somo moja kabla ya kusajili!");
+        return;
+    }
+
+    // Kitambulisho cha kipekee (Unique ID)
+    let studentId = Date.now();
+
+    // Hifadhi data kwenye database ya ndani ya memory
+    studentsDatabase.push({
+        id: studentId,
+        name: name,
+        modules: selectedModules
+    });
+
+    // Pachika data kwenye Jedwali (Table) la HTML
+    let tableBody = document.querySelector('#recordsTable tbody');
+    let noDataRow = document.getElementById('noDataRow');
+    if (noDataRow) { noDataRow.remove(); }
+
+    let newRow = document.createElement('tr');
+    newRow.style.borderBottom = "1px solid #cbd5e1";
+    
+    if (tableBody.children.length % 2 === 1) {
+        newRow.style.backgroundColor = "#f8fafc";
+    }
+
+    // Safu za jedwali na Kifungo cha "View Modules" ambapo masomo yamefichwa
+    newRow.innerHTML = `
+        <td style="padding: 10px; border: 1px solid #cbd5e1; font-weight: bold; color: #334155;">${name}</td>
+        <td style="padding: 10px; border: 1px solid #cbd5e1; color: #475569;">${genderSelect === 'M' || genderSelect === 'Male' ? 'Male' : 'Female'}</td>
+        <td style="padding: 10px; border: 1px solid #cbd5e1;"><span style="background-color: #224568; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">${yearText}</span></td>
+        <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center;">
+            <button type="button" onclick="viewStudentModules(${studentId})" style="background-color: #0056b3; color: white; border: none; padding: 6px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer;">
+                👁️ View Modules
+            </button>
+        </td>
+    `;
+
+    tableBody.appendChild(newRow);
+
+    // Safisha fomu
+    if (nameInput) nameInput.value = '';
+    if (genderInput) genderInput.value = '';
+    
+    document.getElementById('studentYearTrigger').value = "1";
+    autoEnrollSystem();
+
+    alert("Mwanafunzi Umemsajili Salama Kwenye Jedwali!");
+}
+
+// Function inayofungua Pop-up dirisha la masomo
+function viewStudentModules(studentId) {
+    let studentData = studentsDatabase.find(s => s.id === studentId);
+    
+    if (studentData) {
+        document.getElementById('modalTitle').innerHTML = `Masomo ya: <span style="color:#0056b3;">${studentData.name}</span>`;
+        
+        let listHtml = "<ol style='padding-left: 20px; margin: 0;'>";
+        studentData.modules.forEach(mod => {
+            listHtml += `<li style='margin-bottom: 8px;'><strong>${mod}</strong></li>`;
+        });
+        listHtml += "</ol>";
+        
+        document.getElementById('modalBody').innerHTML = listHtml;
+        document.getElementById('modulesModal').style.display = 'flex';
+    }
+}
+
+// Kufunga Pop-up
+function closeModal() {
+    document.getElementById('modulesModal').style.display = 'none';
+}
+
+// Washa autoEnrollSystem mara ukurasa unapofunguliwa
+window.onload = function() {
+    autoEnrollSystem();
+};
+ </script>
+
 </body>
 </html>
